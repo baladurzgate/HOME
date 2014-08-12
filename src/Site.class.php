@@ -386,7 +386,6 @@ class Site {
 		}
 		return $str;
 	}
-}
 
 //____________________________________________[ L O G ]____________________________________________|
 
@@ -430,4 +429,5 @@ class Site {
 		//on ajoute l'alerte au log du site
 		$this->addToLog($oAlert);
 	}
+}
 ?>
