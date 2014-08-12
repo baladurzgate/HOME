@@ -124,8 +124,6 @@
 	//permet de filtrer le log en fonction du type d'alerte (rends le site plus rapide)
 	$S->filterLog('bypass');
 	
-	$S->createHgPageEditList();
-
 	/*$con=mysql_connect($user, $server, $password)or die(mysql_error()) ;
 	mysql_select_db($dbname)or die(mysql_error()) ;*/
 	
