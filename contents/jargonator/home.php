@@ -1,3 +1,4 @@
+<!--HOME-->
 <fieldset id="cadre">
 	<legend>bonjour</legend>
 <div>	En sciences du langage, un jargon est un parler propre aux représentants d'une profession ou d'une activité commune se caractérisant par un lexique spécialisé. C'est un sociolecte.</br>.</br>
