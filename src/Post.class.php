@@ -1,10 +1,10 @@
 <?php
-	/*
-										* * * * * * * * 
-										*             *
-										*   P O S T   *
-										*             *
-										* * * * * * * *
+/*
+						* * * * * * * * 
+						*             *
+						*   P O S T   *
+						*             *
+						* * * * * * * *
 	*/
 class Post extends Component {
 
@@ -101,32 +101,71 @@ class Post extends Component {
 		}
 		return $output;
 	}
+	public function call(){
+		
 	
-	//append
+	}
+	
+	//append 
 	public function append(){
 		$template = $this->table->getTemplates('post');
 		$channels=$this->table->getChannelMap();
 		$type=$this->postType;
 		$values=$this->values;
 		$serial=$this->getSerial();
+		$table = $this->table;
+		$db = $this->table->getDatabase();
 		$outputs=array();
 		foreach($channels as $n=>$i){
-			$access = $i->getAccess();
-			if($access){
-				if(strpos($access,'archives')!==false){
-					$outputs[$n]=$channels[$n]->toClient($values[$n]);
+			if(array_key_exists($n,$values)){
+				if(isset($values[$n])){
+					$access = $i->getAccess();
+					$cType = $i->getChannelType();
+					if($access!==false){
+						if(strpos($access,'archives')!==false){
+							//gestion du channel call (qui appelle d'autres posts)
+							if($cType=="call"){
+								//le nom de la table appellée est dans le nom du channel (ex: new Channel('name'=>'commentaires','type'=>'call' ect...)
+								$calledTable=$db->getTable($n);
+								//$calledTable->extractMap();
+								$arrayOfPostNames=$channels[$n]->toClient($values[$n]);
+								$calledPosts=array();
+								foreach($arrayOfPostNames as $pName){
+									$explodedName=explode("_",$pName);
+									$pSerial=$explodedName[count($explodedName)-1];
+									$calledP = $calledTable->getPostBySerial($pSerial);
+									if($calledP!==false){
+										array_push($calledPosts,$calledP);
+									}
+								}
+								if(count($calledPosts)>0){
+									$outputs[$n]=$calledPosts;
+								}else{
+									$outputs[$n]=false;
+								}
+							}else{
+								$outputs[$n]=$channels[$n]->toClient($values[$n]);
+							}
+						}else{
+							$outputs[$n]="";
+						}
+					}else{
+						$outputs[$n]="";
+					}
+				}else{
+					$outputs[$n]="";
 				}
+			}else{
+				$outputs[$n]="";
 			}
 		}
 		if(file_exists($template)){
 			include($template);
 		}else{
-			echo $this->display($output);
+			echo $this->display($outputs);
 		}
 	
 	}
-
-	
 
 }
 ?>
