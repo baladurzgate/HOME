@@ -1,4 +1,4 @@
-<!--WEBOBJECT-->
+<!--WEBOCJECT-->
 <?php
 class WebObject extends Component {
 	private $name;
@@ -59,9 +59,12 @@ class WebObject extends Component {
 		$output = "";
 		if(file_exists($jsDir)){
 			$dir = new Dir($jsDir);
-			foreach ($dir->scan('js') as $file){
-				$output.='	<script src="'.$file->getURL().'" type="text/javascript"></script>'."\n";
-				$this->Log("script Tag added for ".$file->getURL(),"event");
+			$jsFiles=$dir->scan('js');
+			if($jsFiles!==false){
+				foreach ($jsFiles as $file){
+					$output.='	<script src="'.$file->getURL().'" type="text/javascript"></script>'."\n";
+					$this->Log("script Tag added for ".$file->getURL(),"event");
+				}
 			}
 		}else{
 			$this->Log("Js path does not exist : ".$jsDir,"error");
