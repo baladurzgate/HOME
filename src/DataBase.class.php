@@ -1,11 +1,11 @@
 <?php
-	/*
-									* * * * * * * * * * * *
-									*                     *
-									*   D A T A B A S E   *
-									*                     *
-									* * * * * * * * * * * *
-	*/
+/*
+						* * * * * * * * * * * *
+						*                     *
+						*   D A T A B A S E   *
+						*                     *
+						* * * * * * * * * * * *
+*/
 class DataBase extends Component {
 	private $name;
 	private $format;
