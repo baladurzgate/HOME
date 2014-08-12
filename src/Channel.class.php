@@ -201,6 +201,11 @@ class Channel extends Component {
 					$this->switchFeedback();
 					return true;
 				}
+			case "call":
+				if($this->checkString($value)!==false){
+					$this->switchFeedback();
+					return true;
+				}
 			break;
 			default:
 				if($value==NULL){$value="";}
@@ -380,6 +385,16 @@ class Channel extends Component {
 						break;
 					}
 				break;
+				case "call":
+					switch($this->getTreatment()){
+						case 'normal':
+							$output=$this->S->cleanString($value,'html>');
+						break;
+						case 'crypted':
+							$output=sha1($this->S->cleanString($value,'html>'));
+						break;
+					}
+				break;
 				default:
 					switch($this->getTreatment()){
 						case 'normal':
@@ -437,6 +452,11 @@ class Channel extends Component {
 				case "author":
 					$output=$this->S->cleanString($value,'html<');
 				break;
+				case "call":
+					//channel particulier , contiens des noms de post d'une autre table séparés par une virgule (ex: post_746876,post_8756876...)
+					//l'output renvoi un array de posts qui sera ensuite traitée au moment de leur affichage (voir Post->append)
+					$output=explode(",",$this->S->cleanString($value,'html<'));
+				break;
 				default:
 					$output=$this->S->cleanString($value,'html<');		
 				break;
@@ -491,6 +511,9 @@ class Channel extends Component {
 					$Attributes='type="hidden"';
 				break;
 				case "author":
+					$Attributes='type="hidden"';
+				break;
+				case "call":
 					$Attributes='type="hidden"';
 				break;
 				default:

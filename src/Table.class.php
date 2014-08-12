@@ -1,11 +1,11 @@
 <?php
-	/*
-											* * * * * * * * *
-											*               *
-											*   T A B L E   *
-											*               *
-											* * * * * * * * *
-	*/
+/*
+						* * * * * * * * *
+						*               *
+						*   T A B L E   *
+						*               *
+						* * * * * * * * *
+*/
 class Table extends Component {
 
 	//variables 
@@ -50,7 +50,10 @@ class Table extends Component {
 		}
 		return false;
 	}
-
+	
+	public function getDataBase(){
+		return $this->dataBase;
+	}
 	public function linkTo($as){
 		$this->acountSystem=$as;
 	}
@@ -64,6 +67,10 @@ class Table extends Component {
 		$this->paths['root'] = $root;
 		$this->paths['dir'] = $this->paths['root'].'/'.$this->name;
 		$this->paths['info'] = $this->paths['dir']."/".$this->name.'-table.xml';
+		$this->paths['templates'] =$templatePath;
+		$this->templates['post'] = $this->paths['templates']."/".$this->name.'-post.php';
+		$this->templates['form'] = $this->paths['templates']."/".$this->name.'-form.php';
+		$this->templates['archives'] = $this->paths['templates']."/".$this->name.'-archives.php';
 	}
 	
 	public function getFeedback(){
@@ -83,36 +90,57 @@ class Table extends Component {
 	}
 	
 	public function getPost($id){
-		foreach($this->postMap as $t => $p){
-			if($p->getValue('id')==$id){
-				return $p;	
+		if(count($this->postMap)>0){
+			foreach($this->postMap as $t => $p){
+				if($p->getValue('id')==$id){
+					return $p;	
+				}
 			}
 		}
+		return false;
 	}
 	public function getPosts($id){
 		return $this->postMap;
 	}	
 	public function getPostValue($id,$val){
-		foreach($this->postMap as $t => $p){
-			if($p->getValue('id')==$id){
-				return $p->getValue($val);
+		if(count($this->postMap)>0){
+			foreach($this->postMap as $t => $p){
+				if($p->getValue('id')==$id){
+					return $p->getValue($val);
+				}
 			}
 		}
+		return false;
 	}
 	
 	public function getPostsByValue($channel,$val){
 		$matchingPosts = array();
-		foreach($this->postMap as $t => $p){
-			if($p->getValue($channel)==$val){
-				array_push($matchingPosts,$p);	
+		if(count($this->postMap)>0){
+			foreach($this->postMap as $t => $p){
+				if($p->getValue($channel)==$val){
+					array_push($matchingPosts,$p);	
+				}
+			}
+			if(count($matchingPosts)>0){
+				return $matchingPosts[0];
 			}
 		}
 		return $matchingPosts;
 	}
-	
-	public function getDataBase(){
-		return $this->dataBase;
-	}
+	public function getPostBySerial($sl){
+		$matchingPosts = array();
+		if(count($this->postMap)>0){
+			foreach($this->postMap as $t => $p){
+				if($p->getSerial()==$s){
+					array_push($matchingPosts,$p);	
+				}
+			}
+			if(count($matchingPosts)>0){
+				return $matchingPosts[0];
+			}
+		}
+		return false;
+	}	
 	
 	public function getTemplates($t){
 		return $this->templates[$t];
