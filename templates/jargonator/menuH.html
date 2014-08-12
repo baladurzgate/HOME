@@ -1,0 +1,9 @@
+<!--MENUH-->
+<a href="<?php echo $urls['about'] ; ?>">A PROPOS</a> -
+<a href="<?php echo $urls['contribuer'] ; ?>">CONTRIBUER</a> -
+<a href="<?php echo $urls['archives'] ; ?>">DICO</a> -
+<?php global $User,$S,$comptes;
+	if($User!==false){
+		echo $comptes->parseButton('logout','Logout','logout',$S->parseURLFor('home'));
+	}
+?>
