@@ -1,3 +1,4 @@
+<!--WEBOBJECT-->
 <?php
 class WebObject extends Component {
 	private $name;
