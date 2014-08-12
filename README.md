@@ -1,4 +1,4 @@
-Home
+JARGONATOR
 ====
 
-moteur de site dynamique
+néologismes de tout poils
