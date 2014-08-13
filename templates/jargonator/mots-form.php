@@ -9,6 +9,7 @@
 <form id="form-mots" class="form">
 	<div class="form">
 		<?php echo $inputs['orthographe'];?>
+		<?php echo $inputs['etymologie'];?>
 		<?php echo $inputs['definition'];?>
 	</div></br>
 </form>
