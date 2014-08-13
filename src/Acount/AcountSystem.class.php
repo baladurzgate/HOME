@@ -1,10 +1,10 @@
 <?php
 	/*
-										* * * * * * * * * * * * * * * * * 
-										*                               *
-										*   A C O U N T _ S Y S T E M   *
-										*                               *
-										* * * * * * * * * * * * * * * * * 
+					* * * * * * * * * * * * * * * * * 
+					*                               *
+					*   A C O U N T _ S Y S T E M   *
+					*                               *
+					* * * * * * * * * * * * * * * * * 
 	*/
 class AcountSystem extends Table{
 	
