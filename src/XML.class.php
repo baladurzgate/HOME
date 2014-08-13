@@ -1,5 +1,5 @@
-<!--XML-->
 <?php
+//<!--XML-->
 class XML extends File {
 	//variables 
 	private $DOM;
