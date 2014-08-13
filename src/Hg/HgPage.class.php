@@ -1,5 +1,5 @@
-<!-- HGPAGE -->
 <?php
+//<!-- HGPAGE -->
 class HgPage extends Component {
 
 	//variables 
