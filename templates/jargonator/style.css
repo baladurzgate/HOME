@@ -124,10 +124,10 @@ a:active {color:#0000FF;}
 	top:1px;
 }
 
-.randomWord{
+.jargonator{
 	text-align:center;
 	font-size:2em;
-	font-family:arial;
+	font-family:"autopia";
 }
 .lockedWord{
 	text-align:center;
