@@ -12,7 +12,7 @@
 	$bt_racines;
 	$bt_racines_titre='_____N O U V E L L E___R A C I N E____';
 	
-	if($nbr>2){
+	if($nbr<2){
 		$infor = 'aucune racines dans le dico';
 		$mbtclass='locked_bt';
 		$infom='il doit y avoir au moins 2 racines dans le dico';
