@@ -17,6 +17,7 @@
 	if(!$mots->allreadyExist()){
 		$channels = array();
 		$channels['orthographe']=new Channel("orthographe",array("type"=>"hidden","access"=>"form-archives","mandatory"=>"true"));
+		$channels['etymologie']=new Channel("etymologie",array("type"=>"hidden","access"=>"form-archives","mandatory"=>"true"));
 		$channels['definition']=new Channel("definition",array("type"=>"text","access"=>"form-archives","mandatory"=>"true"));
 		$mots ->addchannels($channels);
 	}
