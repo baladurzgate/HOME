@@ -26,8 +26,11 @@
 		commandes.style.display="none";
 		var word = document.getElementById("orthographe");
 		word.className="lockedWord";
-		var input=document.getElementById("channel-orthographe");
-		input.value=word.innerHTML;
+		var input_orth=document.getElementById("channel-orthographe");
+		input_orth.value=word.innerHTML;		
+		var etymologie = document.getElementById("etymologie");
+		var input_etym=document.getElementById("channel-etymologie");
+		input_etym.value=etymologie.innerHTML;
 		var form=document.getElementById("form");
 		form.style.display="block";
 	}
@@ -38,6 +41,8 @@
 		word.className="jargonator";
 		var input=document.getElementById("channel-orthographe");
 		input.value="";
+		var input_etym=document.getElementById("channel-etymologie");
+		input_etym.value="";
 		var form=document.getElementById("form");
 		form.style.display='none';
 	}
