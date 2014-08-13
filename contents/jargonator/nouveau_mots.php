@@ -1,12 +1,16 @@
 <!--NOUVEAU_MOTS-->
-<fieldset id="inscription">
+<fieldset id="inscription" onload="jargonator('mots','<?php echo $S->RequestURL('jargonator');?>');">
 	<fieldset id="">
-		<legend>mots</legend>
-		<div id="mots" class="randomWord"></div>
+		<legend>orthographe</legend>
+		<div id="orthographe" class="jargonator"></div>
+	</fieldset>
+	<fieldset id="">
+		<legend>etymologie</legend>
+		<div id="etymologie" class="etymologie"></div>
 	</fieldset>
 	</br>
 	<span id="commandes"> 
-		<button id="bt-generer" class="bt" onclick="generateRandomWords()">GENERER</button>
+		<button id="bt-generer" class="bt" onclick="jargonator('mots','<?php echo $S->RequestURL('jargonator');?>');">GENERER</button>
 		<button id="bt-definir" class="bt" onclick="lock_word();">DEFINIR</button></br>
 	</span>
 	<div id="form" style="display:none;">
@@ -16,10 +20,11 @@
 </fieldset>
 
 <script type="text/javascript">
+	jargonator('mots','<?php echo $S->RequestURL('jargonator');?>');
 	function lock_word(){
 		var commandes = document.getElementById("commandes");
 		commandes.style.display="none";
-		var word = document.getElementById("mots");
+		var word = document.getElementById("orthographe");
 		word.className="lockedWord";
 		var input=document.getElementById("channel-orthographe");
 		input.value=word.innerHTML;
@@ -29,8 +34,8 @@
 	function unlock_word(){
 		var commandes = document.getElementById("commandes");
 		commandes.style.display="block";
-		var word = document.getElementById("mots");
-		word.className="randomWord";
+		var word = document.getElementById("orthographe");
+		word.className="jargonator";
 		var input=document.getElementById("channel-orthographe");
 		input.value="";
 		var form=document.getElementById("form");
