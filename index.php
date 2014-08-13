@@ -1,5 +1,5 @@
-<!--INDEX-->
 <?php
+	//<!--INDEX-->
 	//le fichier le plus important du site :
 	require('init.php');
 	
