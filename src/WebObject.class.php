@@ -1,5 +1,6 @@
-<!--WEBOCJECT-->
-<?php
+<?php 
+//--WEBOCJECT--
+
 class WebObject extends Component {
 	private $name;
 	private $webObjectType;

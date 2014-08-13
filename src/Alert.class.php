@@ -1,5 +1,5 @@
-<!-- ALERT -->
 <?php
+//<!-- ALERT -->
 class Alert extends Component{
 
 	//variables 

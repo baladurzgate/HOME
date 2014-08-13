@@ -1,5 +1,5 @@
-<!-- PAGE -->
 <?php
+//<!-- PAGE -->
 class Page extends WebObject {
 	private $access;
     public function __construct($name,$access='all',$updateLog=true) {

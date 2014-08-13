@@ -1,5 +1,5 @@
-<!-- MAP -->
 <?php
+//<!-- MAP -->
 class Map extends Component {
 	private $name;
 	private $map = array();

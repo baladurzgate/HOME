@@ -1,5 +1,5 @@
-<!--VISITOR-->
 <?php
+//<!--VISITOR-->
 class Visitor extends Component{
 
 	//variables

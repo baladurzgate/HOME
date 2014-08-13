@@ -1,5 +1,5 @@
-<!--UTILS-->
 <?php
+//<!--UTILS-->
 	$S=Site::getInstance();
 	function pageButton($page,$innerHTML,$class='bt'){
 		$url= $S->RequestURL($page);	

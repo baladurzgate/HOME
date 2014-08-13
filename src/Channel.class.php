@@ -1,5 +1,5 @@
-<!--CHANNEL-->
 <?php
+//<!--CHANNEL-->
 class Channel extends Component {
 
 	//variables 
