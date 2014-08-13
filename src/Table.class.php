@@ -1,11 +1,11 @@
 <?php
-/*
+	/*
 						* * * * * * * * *
 						*               *
 						*   T A B L E   *
 						*               *
 						* * * * * * * * *
-*/
+	*/
 class Table extends Component {
 
 	//variables 
@@ -19,6 +19,7 @@ class Table extends Component {
 	private $idCount;
 	private $postMap;
 	private $acountSystem;
+	private $nameChannel;
 //________________________________________[ C O N S T R U C T O R ]______________________________________|
 
     public function __construct($name='new_table',$updateLog=true) {
@@ -64,13 +65,15 @@ class Table extends Component {
 		}else{
 			$root=$this->S->paths['S']['data'].'/';
 		}
+
 		$this->paths['root'] = $root;
 		$this->paths['dir'] = $this->paths['root'].'/'.$this->name;
 		$this->paths['info'] = $this->paths['dir']."/".$this->name.'-table.xml';
-		$this->paths['templates'] =$templatePath;
+		$this->paths['templates'] =$this->S->template->getServerPath('dir');
 		$this->templates['post'] = $this->paths['templates']."/".$this->name.'-post.php';
 		$this->templates['form'] = $this->paths['templates']."/".$this->name.'-form.php';
 		$this->templates['archives'] = $this->paths['templates']."/".$this->name.'-archives.php';
+		$this->templates['single'] = $this->S->template->getClientPath('dir')."/".$this->name.'-single.php';
 	}
 	
 	public function getFeedback(){
@@ -122,10 +125,10 @@ class Table extends Component {
 				}
 			}
 			if(count($matchingPosts)>0){
-				return $matchingPosts[0];
+				return $matchingPosts;
 			}
 		}
-		return $matchingPosts;
+		return false;
 	}
 	public function getPostBySerial($sl){
 		$matchingPosts = array();
