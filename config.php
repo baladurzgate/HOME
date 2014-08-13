@@ -1,5 +1,6 @@
-<!--CONFIG-->
 <?php	
+	//<!--CONFIG-->
+	
 	//ajout des chemins detailles
 	//chemins serveur :
 	$S->addPath("S","src",$root.'/src/'); 
