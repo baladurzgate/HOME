@@ -1,5 +1,6 @@
-<!--INIT-->
 <?php
+	//<!--INIT-->
+	
 	//desactivation des erreurs php
 	//error_reporting(0);	
 
