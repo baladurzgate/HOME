@@ -1,0 +1,10 @@
+.online_user{
+	background-color:#AAFFAA;
+	font-size:1em;
+	font-family:"jargonator";
+	border:1px solid #AAAADD;
+	text-align:center;
+	width:20;
+	height:20;
+	position:absolute;
+}
