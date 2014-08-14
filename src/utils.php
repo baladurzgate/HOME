@@ -8,6 +8,7 @@
 		return $output;
 	}
 	
+	//todo = rendre ces fonctions recursives pour lire les sous array
 	function stringToArray($string,$split1,$split2){
 		$output = array();
 		if($string!==NULL){
@@ -28,6 +29,7 @@
 	} 
 	function arrayToString($array,$split1,$split2){
 		$string="";
+		$output="";
 		if(is_array($array)==true){
 			foreach($array as $n => $v){
 				$string.=$n.$split2.$v.$split1;
