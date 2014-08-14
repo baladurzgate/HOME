@@ -1,15 +1,15 @@
 <?php
-	/*
+/*
 						* * * * * * * * * *
 						*                 *
 						*   ! S I T E  !  *
 						*                 *
 						* * * * * * * * * *
-	*/
+*/
 class Site {
 
 	//variables 
-	private static $_instance = null;
+	private static $_instance;
 	private $name;
 	private $serverName;
 	private $serverSoftware;
@@ -65,9 +65,12 @@ class Site {
 		//on reccupere la valeur Page pass�e potentiellement par GET
 		$this->setPageFromGET();
 		
+		//on reccupere la valeur Request pass�e potentiellement par GET
+		$this->setRequestFromGET();
+		
 		//on creer un objet client
-		$this->client=new Visitor();	
-				
+		$this->client=new Visitor();
+						
 		$this->toLog("Site initialized","event");
 	}
 	
@@ -100,7 +103,6 @@ class Site {
 		}
 		return false;
 	}
-	
 //___________________________________________[ S E T T E R S ]___________________________________________|
 
 	public function __set($property, $value) {
@@ -170,13 +172,18 @@ class Site {
 		$pageName =$get->getValue();
 		if($pageName!==false){
 			$this->page = new Page($pageName); 
-			$this->setPageRequest($pageName);
 		}else{
 			$this->page = new Page($this->default_page); 
-			$this->setPageRequest($this->default_page);
 		}	
-	}					
-
+	}		
+	
+	private function setRequestFromGET(){
+		$get = new Variable('GET','r');
+		$req =$get->getValue();
+		if($req!==false&&$req!==''){
+			$this->setPageRequest($req);
+		}	
+	}	
 
 
 //____________________________________________[ A D D E R S ]____________________________________________|
@@ -217,42 +224,22 @@ class Site {
 	
 	//-----------ensemble de fonctions permettant de generer des chemins dans les balises html 
 	//--genere des URL avec variables en GET
-	public function parseGetURL($variable,$value){
-		$url = $this->URL."index.php?".$variable."=".$value;
-		return $url;
-	}
+
 	public function parseRequestURL($variable,$value){
 		$url = $this->URL."request.php?".$variable."=".$value;
 		return $url;
 	}
-	// il faudrait faire une fonction qui prend deux arrays en argument mais la flemme
-	public function parseDoubleGetURL($variable1,$value1,$variable2,$value2){
-		$url = $this->URL."index.php?".$variable1."=".$value1."&".$variable2."=".$value2;
-		return $url;
-	}
-	
-	public function parseTripleGetURL($variable1,$value1,$variable2,$value2,$variable3,$value3){
-		$url = $this->URL."index.php?".$variable1."=".$value1."&".$variable2."=".$value2."&".$variable3."=".$value3;
-		return $url;
-	}
+
 	//renvoi l'url de la Page souhaitée (marche potentielement en local et en ligne)
-	public function parseURLFor($Page){
-		$url=$this->parseGetURL("p",$Page);
+	public function parseURLFor($p=NULL,$r=NULL,$t=NULL,$c=NULL){
+		$url = $this->URL.'index.php?p='.$p.'&r='.$r.'&t='.$t.'&c='.$c;
 		return $url;
 	}
 	public function RequestURL($Page){
 		$url=$this->parseRequestURL("p",$Page);
 		return $url;
 	}
-	//renvoi l'url de la Page souhaitée avec le Template souhaité (marche potentielement en local et en ligne)
-	public function parseTemplateURLFor($Page,$Template){
-		$url=$this->parseDoubleGetURL("p",$Page,"t",$Template);
-		return $url;
-	}
-	public function parseTripleURLFor($Page,$Template,$Content){
-		$url=$this->parseTripleGetURL("p",$Page,"t",$Template,'c',$Content);
-		return $url;
-	}
+
 	
 	//creer des balises script pour tout les fichier js contenus dans le dossier "js"
 	public function getJsTag(){
@@ -281,7 +268,7 @@ class Site {
 	}
 
 	public function parsePageButton($page,$innerHTML,$class='bt'){
-		$url=$this->parseTripleURLFor($page,$this->template->getName(),$this->content->getName());	
+		$url=$this->parseURLFor($page);	
 		$onclick='window.location.href = \''.$url.'\';';
 		$output='<button class="'.$class.'" onclick="'.$onclick.'">'.$innerHTML.'</button>'."\n";
 		return $output;
@@ -327,6 +314,11 @@ class Site {
 			}
 		}
 		return $this->page->getINC();
+	}
+	
+	public function jumpRequest(){
+		
+	
 	}
 
 	//on verifi si cela ne risque pas de perturber le fonctionnement du site
@@ -375,6 +367,12 @@ class Site {
 			break;
 			case 'get':
 				$str = $string;				
+			break;
+			case 'session':
+				$str = htmlentities($string, ENT_QUOTES, 'UTF-8');				
+			break;
+			case 'cookie':
+				$str = htmlentities($string, ENT_QUOTES, 'UTF-8');		
 			break;
 			case 'sql':
 				$str = mb_convert_encoding($string, 'UTF-8', 'UTF-8');

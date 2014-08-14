@@ -1,8 +1,5 @@
 <?php
-	//<!--INIT-->
-	
-	//desactivation des erreurs php
-	//error_reporting(0);	
+	//<!--INIT-->	
 
 	// recuperation des infos sur le serveur
 	$serverName = $_SERVER['SERVER_NAME'];
@@ -55,6 +52,8 @@
 
 	//Importation des autres classes
 	require($S->paths["S"]['src'].'Variable.class.php');
+	require($S->paths["S"]['src'].'utils.php');
+	require($S->paths["S"]['src'].'Session.class.php');
 	require($S->paths["S"]['src'].'Map.class.php');
 	require($S->paths["S"]['src'].'WebObject.class.php');
 	require($S->paths["S"]['src'].'Content.class.php');
@@ -123,11 +122,9 @@
 	
 	
 	//permet de filtrer le log en fonction du type d'alerte (rends le site plus rapide)
-	$S->filterLog('bypass');
-	
+	$S->filterLog('error');
+
 	/*$con=mysql_connect($user, $server, $password)or die(mysql_error()) ;
 	mysql_select_db($dbname)or die(mysql_error()) ;*/
 	
-	//fonction php utiles
-	require($root.'/src/utils.php');
 ?>

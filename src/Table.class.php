@@ -674,7 +674,7 @@ class Table extends Component {
 		$headerVar = new Variable('POST','header');
 		$request = $requestVar->getValue();
 		$header = $headerVar->getValue();
-		$url = $this->S->parseTripleURLFor($header,$this->S->template->getName(),$this->S->content->getName());
+		$url = $this->S->parseURLFor($header,'',$this->S->template->getName(),$this->S->content->getName());
 		$currentUser=$this->acountSystem->getCurrentUser();
 		$author= "";
 		if($currentUser==false){$author="john doe";}else{$author=$currentUser->getValue('username');}
