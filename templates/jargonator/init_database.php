@@ -52,9 +52,9 @@
 	//urls du site
 	global $urls;
 	$urls=array();
-	$urls['nouveau_compte'] = $S->parseURLFor('nouveau_compte');
-	$urls['contribuer'] = $S->parseURLFor('contribuer');
-	$urls['archives'] = $S->parseURLFor('archives');
+	$urls['nouveau_compte'] = $S->parseURLFor('nouveau_compte','confirmation-compte');
+	$urls['contribuer'] = $S->parseURLFor('contribuer','contribuer');
+	$urls['archives'] = $S->parseURLFor('archives','archives');
 	$urls['login'] = $S->parseURLFor('login');
 	$urls['nouveau_mots'] = $S->parseURLFor('nouveau_mots');
 	$urls['about'] = $S->parseURLFor('about');
