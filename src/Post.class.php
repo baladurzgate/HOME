@@ -5,7 +5,7 @@
 						*   P O S T   *
 						*             *
 						* * * * * * * *
-	*/
+*/
 class Post extends Component {
 
 	//variables 
@@ -14,6 +14,7 @@ class Post extends Component {
 	private $values = array();
 	private $table;
 	private $postType;
+
 
 	
 	//consctructeur
@@ -86,7 +87,6 @@ class Post extends Component {
 		if(isset($values)&&count($values)>0){
 			$type=$this->postType;
 			$output='</br>'."\n";
-			$output.='<div id="'.$this->values['id'].'" class="'.$this->table->getName().'-post" style="font-size:8; font-family:\'courrier\'">'."\n";
 			$output.="\t".'<TABLE  BORDER="1">'."\n";
 			$output.="\t".'<CAPTION>'.$type.'</CAPTION>'."\n";
 			foreach($values as $name => $value){
@@ -162,9 +162,17 @@ class Post extends Component {
 		if(file_exists($template)){
 			include($template);
 		}else{
+			echo $template.'____do not exist';
 			echo $this->display($outputs);
 		}
 	
+	}
+	
+	
+	public function parseLink($innerHTML){
+		$url = $this->table->getTemplates('single').'?post='.$this->getSerial;
+		$output = '<a href="'.$url.'">'.$innerHTML.'</a>';
+		return $output;
 	}
 
 }
