@@ -10,7 +10,7 @@ class HgPage extends Component {
 	
 	//consctructeur
     public function __construct($name){
-		parent::__construct('mirror');
+		parent::__construct('hgpage');
 		$this->name = $name;
 		$this->init();
     }
@@ -27,6 +27,8 @@ class HgPage extends Component {
 		$this->paths['C']['objects']=$this->paths['C']['dir'].'head/';
 		$this->paths['C']['shared']=$this->paths['C']['dir'].'shared/';
 		
+		$this->paths['C']['html']=$this->S->paths['S']['template'].'/'.$this->name.'.html';
+		
 		if(!file_exists($this->paths['S']['dir'])){
 			$dir=new Dir($this->paths['S']['dir']);
 			$dir->create();
@@ -41,16 +43,25 @@ class HgPage extends Component {
 	public function setPath($t,$p,$u){
 		$this->paths[$t][$p]=$u;
 	}
-	public function insert(){
+	public function hgToHtml(){
 		$dir = new Dir($this->getPath('S','objects'));
 		$objects=$dir->scan();
 		foreach($objects as $o){
 			if($o->extractName!=='page'){
 				$object = new HgObject($o,$this);
-				$object->insert();
+				$object->append();
 			}
 		}
 	}
-
+	public function HtmlToHg(){
+		$dir = new Dir($this->getPath('S','objects'));
+		$objects=$dir->scan();
+		foreach($objects as $o){
+			if($o->extractName!=='page'){
+				$object = new HgObject($o,$this);
+				$object->append();
+			}
+		}
+	}
 }
 ?>
