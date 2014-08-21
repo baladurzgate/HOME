@@ -72,6 +72,7 @@
 	require($S->paths["S"]['src'].'Hg/HgObject.class.php');
 	require($S->paths["S"]['src'].'Acount/UserAcount.class.php');
 	require($S->paths["S"]['src'].'Acount/AcountSystem.class.php');
+	require($S->paths["S"]['src'].'Pad/Pad.class.php');
 	
 	//initialisation de l'objet Site (et activation du log)
 	$S->init();
