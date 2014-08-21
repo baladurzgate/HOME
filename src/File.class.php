@@ -101,15 +101,7 @@ class File extends Component {
 		$lastSplit=count($nameSplit)-1;
 		return $nameSplit[$lastSplit];
 	}
-	//chargement du fichier (WIP)
-	public function load($updateLog=true){
-		if (file_exists($this->url)) {
-		
-		}else{
-			return false;
-		}
-	}
-	
+
 	//creation du fichier sur le serveur
 	public function create($updateLog=true){
 		if($updateLog){$this->Log("creating file...",'process');}
@@ -134,7 +126,13 @@ class File extends Component {
 	
 	//lecture du fichier , retourne une string
 	public function read($updateLog=true){
+	
 		if($updateLog){$this->Log("reading file...",'process');}
+		if($this->blocked==false){
+			$output=file_get_contents($this->url);
+			return $output;
+		}
+		/*
 		if($this->blocked==false){
 			if (file_exists($this->url)) {
 				$output="";
@@ -151,7 +149,9 @@ class File extends Component {
 				if($updateLog){$this->Log("! file do not exist !",'error');}
 			}
 		}
+		*/
 		if($updateLog){$this->Log("! Cannot read file ! : ".$this->url." file blocked !",'error');}
+		
 		return false;
 	}
 	
@@ -219,6 +219,10 @@ class File extends Component {
 		return false;
 	}	
 
+	public function load(){
+		$output=file_get_contents($this->url);
+		return $output;
+	}
 
 }
 ?>
