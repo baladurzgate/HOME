@@ -1,24 +1,27 @@
 <?php
-/*
-						* * * * * * * * * * * *
-						*                     *
-						*   D A T A B A S E   *
-						*                     *
-						* * * * * * * * * * * *
-*/
+	/*
+									* * * * * * * * * * * *
+									*                     *
+									*   D A T A B A S E   *
+									*                     *
+									* * * * * * * * * * * *
+	*/
 class DataBase extends Component {
 	private $name;
 	private $format;
 	private $tableMap;
 	private $feedback;
 	private $paths= array();
+	private $connect;
+	private $connected;
 	
     public function __construct($name='new_database',$format='xml',$updateLog=true) {
 		parent::__construct("database");
 		$this->name=$name;
 		$this->format=$format;
 		$this->feedback=new Feedback();
-		$this->tableMap = new Map('tables');
+		$this->tableMap = array();
+		$this->connected = false;
 		if($updateLog){
 			$this->Log("new ".$format." database :".$this->name,"event");
 		}
@@ -31,13 +34,68 @@ class DataBase extends Component {
 				}			
 			break;
 			case 'mysql':
-			
+				$this->paths['dir'] = $this->S->paths['S']['databases'].$this->name;
+				$this->paths['info'] = $this->paths['dir']."/".$this->name.'-database.xml';
+			break;
+			default:
 			
 			break;
 		}
-	
 	}
-	
+	public function connect($host,$username,$password){
+		if (!mysql_connect($host, $username, $password)) {
+		   echo 'Impossible de se connecter à MySQL';
+		   exit;
+		   return false;
+		}
+		$this->connected=true;
+		$this->cloneSQL();
+	}
+	public function cloneSQL(){
+		$count=0;
+		$this->tableMap=array();
+		if($this->connected==true){
+			$db = $this->getName();
+			$sql = "SHOW TABLES FROM ".$this->getName()."";
+			$tables_result = mysql_query($sql);
+
+			if (!$tables_result ) {
+			   echo  mysql_error();
+			   exit;
+			}
+			while($t=mysql_fetch_row($tables_result)) {
+				$tname=$t[0];
+				//echo $t[0].'</br>';
+				$table = new Table($tname);
+				$channels = array();
+				$channel_names=array();
+				$colums = mysql_query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '".$this->getName()."' AND TABLE_NAME = '".$tname."'");
+				while ($c = mysql_fetch_row($colums)) {
+					//echo '___'.$c[0].'</br>';
+					$cname = $c[0];
+					array_push($channel_names,$cname);
+					$channels[$cname]=new Channel($cname,array("type"=>"text","access"=>"archives"));
+				}
+				$table ->addchannels($channels);
+				$this->loadTable($table);
+				$query="SELECT * FROM ".$db.".".$tname."";
+				$result=mysql_query($query);
+				while($post_data=mysql_fetch_row($result)) {	
+					$values=array();
+					foreach($post_data as $k => $data){
+						$values[$channel_names[$k]]=$data;
+					}
+					$post = new Post('post',$table);
+					$post->setValues($values);
+					$table->loadPost($post);
+				}
+				$count++;
+			}
+			//mysql_free_result($tables);		
+		}else{
+			echo 'disconnected';
+		}
+	}
 	//getters
 	public function getName(){
 		return $this->name;
@@ -56,13 +114,12 @@ class DataBase extends Component {
 				}
 			break;
 			case 'mysql':
-			
-			
+				return $this->tableMap[$name];
 			break;
 		}
 	}
 	public function getTableFromMap($name){
-		return $this->tableMap->get($name);
+		return $this->tableMap[$name];
 	}	
 	
 	public function getFormat(){
@@ -78,7 +135,7 @@ class DataBase extends Component {
 		return $this->feedback;
 	}
 	public function updateTableMap(){
-		$this->tableMap=$this->getAllTables();
+		$this->tableMap=$this->getAllTables($this->format);
 	}
 	//adders
 	public function addMessage($m){
@@ -91,11 +148,19 @@ class DataBase extends Component {
 	}
 	public function addTable($table){
 		if($table->isType('table')){
-			if($table->create($this->getFormat(),$this)){
-				$map=$this->getMap();
-				$map->set($table->getName(),$table);
+			if($table->create('xml',$this)){
+				$name=$table->getName();
+				$this->tableMap[$name]=$table;
 				$this->updateInfoFile();
 			}
+		}
+	}	
+	public function loadTable($table){
+		if($table->isType('table')){
+			$table->setDataBase($this);
+			$name=$table->getName();
+			$this->tableMap[$name]=$table;
+			$table->refreshPaths();
 		}
 	}
 	//creators
@@ -112,7 +177,14 @@ class DataBase extends Component {
 				}
 			break;
 			case 'mysql':
-			
+				if(!$this->allreadyExist()){
+					$this->createDir();
+					$this->createInfoFile();
+				}else{
+					$this->createInfoFile();
+					$this->extractMap();
+					$this->cloneSQL();					
+				}			
 			break;
 		}
 	}	
@@ -146,7 +218,7 @@ class DataBase extends Component {
 				return file_exists($this->paths['info'])&&file_exists($this->paths['dir']);
 			break;
 			case 'mysql':
-				
+				return file_exists($this->paths['info'])&&file_exists($this->paths['dir']);
 			break;
 		}
 
@@ -160,9 +232,8 @@ class DataBase extends Component {
 		$dom->appendChild($root);
 		$map = $dom->createElement('MAP');
 		$root->appendChild($map);
-		$Tmap = $this->getMap();
-		$array = $Tmap->getArray();
-		$L = $Tmap->getLength();
+		$array = $this->tableMap;
+		$L = count($array);
 		if($L>0){
 			foreach($array as $n => $t){
 				$table = $dom->createElement('table');
@@ -191,14 +262,27 @@ class DataBase extends Component {
 							$name = $t->getAttribute('name');
 							if($name!=NULL){
 								$map=$this->getMap();
-								$map->set($name,new Table($name,$this));
+								$map[$name]=new Table($name,$this);
 							}
 						}
 					}
 				}
 			break;
 			case 'mysql':
-			
+				$this->Log('extracting tables map...',"process");
+				$XMLFile = new XML($this->paths['info']);
+				$dom=$XMLFile->readDOM();
+				$tables=$dom->getElementsByTagName('table');
+				if($tables!=NULL){
+					foreach($tables as $t){
+						if ($t->hasAttributes()){		
+							$name = $t->getAttribute('name');
+							if($name!=NULL){
+								$this->tableMap[$name]=new Table($name,$this);
+							}
+						}
+					}
+				}
 			break;
 		}
 
@@ -241,7 +325,7 @@ class DataBase extends Component {
 				}
 			break;
 			case 'mysql':
-			
+
 			break;
 		}
 		return $output;
