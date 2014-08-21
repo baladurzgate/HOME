@@ -1,10 +1,10 @@
-<?php
-/*
-						* * * * * * * * 
-						*             *
-						*   P O S T   *
-						*             *
-						* * * * * * * *
+ï»¿<?php
+	/*
+										* * * * * * * * 
+										*             *
+										*   P O S T   *
+										*             *
+										* * * * * * * *
 	*/
 class Post extends Component {
 
@@ -14,6 +14,7 @@ class Post extends Component {
 	private $values = array();
 	private $table;
 	private $postType;
+
 
 	
 	//consctructeur
@@ -31,7 +32,7 @@ class Post extends Component {
 	
 	//Manipulation des valeurs 
 	
-	//GET rend une valeur preparê¥
+	//GET rend une valeur preparée
 	public function getSerial(){
 		return $this->serial;
 	}
@@ -51,7 +52,7 @@ class Post extends Component {
 	public function setSerial($n){
 		$this->serial=$n;
 	}
-	//SET passe une valeur traitê¥ au prê¢¬able 
+	//SET passe une valeur traitée au préalable 
 	public function setValue($i,$v){
 		if($this->S->isAllowed($this,$v,true)){
 			$channels=$this->table->getChannelMap();
@@ -86,7 +87,6 @@ class Post extends Component {
 		if(isset($values)&&count($values)>0){
 			$type=$this->postType;
 			$output='</br>'."\n";
-			$output.='<div id="'.$this->values['id'].'" class="'.$this->table->getName().'-post" style="font-size:8; font-family:\'courrier\'">'."\n";
 			$output.="\t".'<TABLE  BORDER="1">'."\n";
 			$output.="\t".'<CAPTION>'.$type.'</CAPTION>'."\n";
 			foreach($values as $name => $value){
@@ -162,9 +162,17 @@ class Post extends Component {
 		if(file_exists($template)){
 			include($template);
 		}else{
+			echo $template.'____do not exist';
 			echo $this->display($outputs);
 		}
 	
+	}
+	
+	
+	public function parseLink($innerHTML){
+		$url = $this->table->getTemplates('single').'?post='.$this->getSerial;
+		$output = '<a href="'.$url.'">'.$innerHTML.'</a>';
+		return $output;
 	}
 
 }

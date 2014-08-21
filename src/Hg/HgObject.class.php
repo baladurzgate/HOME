@@ -1,4 +1,5 @@
-<?php
+﻿<?php
+//<!--HgObject-->
 class HgObject extends Component {
 
 	//variables 
@@ -46,8 +47,8 @@ class HgObject extends Component {
 		$this->data=$data;
 		return $data ;
 	}
-	public function generateHTML(){
-		$div='<div id="'.$this->name.'" style="'.$this->generateCSS().'">'."\n".$this->generateContent().'</div>'."\n";
+	public function parseHTML(){
+		$div='<div id="'.$this->name.'" style="'.$this->parseCSS().'">'."\n".$this->parseContent().'</div>'."\n";
 		if(isset($this->data['link'])){
 			$link = $this->data['link']['val'];
 			$output ='<a href="'.$link.'">'.$div.'</a>';
@@ -57,11 +58,11 @@ class HgObject extends Component {
 		return $output;
 	}
 	
-	public function insert(){
-		echo $this->generateHTML();
+	public function append(){
+		echo $this->parseHTML();
 	}
 	
-	public function generateContent(){
+	public function parseContent(){
 		$data=$this->data;
 		$content="";
 		switch($this->objectType){
@@ -152,7 +153,7 @@ class HgObject extends Component {
 		}
 		return $content;
 	}
-	public function generateCSS(){
+	public function parseCSS(){
 		$output='';
 		$data=$this->data;
 		foreach($data as $n => $d){

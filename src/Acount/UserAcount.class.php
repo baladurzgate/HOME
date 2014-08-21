@@ -1,5 +1,4 @@
 <?php
-//<!--USERACOUNT-->
 class UserAcount extends Post{
 
 	private $acountSystem;

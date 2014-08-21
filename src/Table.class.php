@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 	/*
-						* * * * * * * * *
-						*               *
-						*   T A B L E   *
-						*               *
-						* * * * * * * * *
+											* * * * * * * * *
+											*               *
+											*   T A B L E   *
+											*               *
+											* * * * * * * * *
 	*/
 class Table extends Component {
 
@@ -29,6 +29,7 @@ class Table extends Component {
 		$this->feedback=new Feedback();
 		$this->paths = array();
 		$this->templates =  array();
+		$this->postMap =  array();
 		$this->idCount=0;
 		if($updateLog){
 			$this->Log("new table :".$this->name,"event");
@@ -347,7 +348,10 @@ class Table extends Component {
 	public function addMessage($m){
 		$this->feedback->addMessage($m,$this->name);
 	}
-	
+	public function loadPost($post){
+		$this->Log('adding new Post...',"process");
+		array_push($this->postMap,$post);	
+	}	
 //___________________________________________[ P A R S E R ]___________________________________________|
 
 	public function parsePostID($format){
@@ -533,15 +537,19 @@ class Table extends Component {
 
 
 	public function appendForm(){
-		$templateUrl = $this->templates['form'];
-		if(file_exists($templateUrl)){
-			$inputs = array();
-			foreach ($this->channelMap as $name => $input){
-				if(strpos($input->getAccess(),'form')!==false){
-					$inputs[$name]=$this->parseInputTag($name)."\n";
+		$templateUrl=$this->templates['form'];
+		if(isset($templateUrl)){
+			if(file_exists($templateUrl)){
+				$inputs = array();
+				foreach ($this->channelMap as $name => $input){
+					if(strpos($input->getAccess(),'form')!==false){
+						$inputs[$name]=$this->parseInputTag($name)."\n";
+					}
 				}
-			}
-			include($templateUrl);
+				include($templateUrl);
+			}else{
+				echo $this->parseForm();		
+			}					
 		}else{
 			echo $this->parseForm();		
 		}
@@ -554,6 +562,7 @@ class Table extends Component {
 		if($posts!=NULL&&count($posts)>=1){
 			$this->Log("including posts...","process");
 			foreach($posts as $k => $p){
+				echo $p->getValue('post_title');
 				$p->append();
 			}
 			return true;
@@ -606,7 +615,7 @@ class Table extends Component {
 	}
 	
 	public function all(){
-		return $this->getPostMap();
+		return $this->postMap;
 	}	
 	
 	public function sortByChannel($posts,$channel,$order=SORT_ASC){

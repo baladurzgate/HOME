@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 	/*
-					* * * * * * * * * * * * * * * * * 
-					*                               *
-					*   A C O U N T _ S Y S T E M   *
-					*                               *
-					* * * * * * * * * * * * * * * * * 
+										* * * * * * * * * * * * * * * * * 
+										*                               *
+										*   A C O U N T _ S Y S T E M   *
+										*                               *
+										* * * * * * * * * * * * * * * * * 
 	*/
 class AcountSystem extends Table{
 	
@@ -132,6 +132,8 @@ class AcountSystem extends Table{
 						//on vide les les variables de la session 
 						$_sessionName->setValue("");			
 						$_sessionMP->setValue("");	
+						$session = new Session();
+						$session->delete();
 						//on initialise currentUser
 						$this->setCurrentUser = false;
 						//on change le status du membre 

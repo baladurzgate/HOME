@@ -1,5 +1,4 @@
 <?php
-//-----VARIABLE-----
 class Variable extends Component{
 	
 	//variables

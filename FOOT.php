@@ -3,4 +3,4 @@
 <?php echo $S->parseScriptTags(); ?>
 </div>
 </body>
-</head>
+</html>

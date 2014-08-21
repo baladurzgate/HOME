@@ -1,5 +1,5 @@
+﻿<?php //--FILTER--?>
 <?php
-//<!--FILTER-->
 class Filter extends Component {
 	private $sign;
 	private $name;
