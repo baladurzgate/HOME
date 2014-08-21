@@ -1,10 +1,10 @@
 <?php
 	/*
-											* * * * * * * * *
-											*               *
-											*   T A B L E   *
-											*               *
-											* * * * * * * * *
+						* * * * * * * * *
+						*               *
+						*   T A B L E   *
+						*               *
+						* * * * * * * * *
 	*/
 class Table extends Component {
 
@@ -537,8 +537,8 @@ class Table extends Component {
 
 
 	public function appendForm(){
-		$templateUrl;
-		if(isset($this->templates['form'])){
+		$templateUrl=$this->templates['form'];
+		if(isset($templateUrl)){
 			if(file_exists($templateUrl)){
 				$inputs = array();
 				foreach ($this->channelMap as $name => $input){
