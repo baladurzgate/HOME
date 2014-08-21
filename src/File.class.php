@@ -1,11 +1,11 @@
-﻿<?php
-	/*
-													* * * * * * * * * * * * * * *
-													*                           *
-													*         F I L E           *
-													*                           *
-													* * * * * * * * * * * * * * *
-	*/
+<?php
+/*
+						* * * * * * * * * * * * * * *
+						*                           *
+						*         F I L E           *
+						*                           *
+						* * * * * * * * * * * * * * *
+*/
 class File extends Component {
 
 	//variables 
@@ -169,7 +169,7 @@ class File extends Component {
 							$toWrite=$string;
 						break;
 						case 'after':
-							//inserer apr�s
+							//inserer après
 							$toWrite=$existing.$string;
 						break;
 						case 'before':
