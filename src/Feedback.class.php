@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 	/*
-						* * * * * * * * * * * *
-						*                     * 
-						*   F E E D B A C K   *
-						*                     *
-						* * * * * * * * * * * *
+											* * * * * * * * * * * *
+											*                     * 
+											*   F E E D B A C K   *
+											*                     *
+											* * * * * * * * * * * *
 															
 	Gestion des messages destinés à l'utilisateur										
 	*/

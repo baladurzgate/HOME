@@ -1,5 +1,4 @@
 <?php
-//<!--VISITOR-->
 class Visitor extends Component{
 
 	//variables
@@ -17,13 +16,6 @@ class Visitor extends Component{
 		if($updateLog){
 			$this->Log("new client ","event");
 			$this->Log("browser :".$this->browser,"info");
-		}
-		
-		//on demarre une session
-		session_save_path($this->S->paths['S']['sessions']);
-		if(session_start()){
-			$_SESSION['welcome']="hello!";
-			$this->Log("session started--->".$_SESSION['welcome'],"event");
 		}
     }
 	

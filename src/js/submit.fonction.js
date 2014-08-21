@@ -1,4 +1,4 @@
-//---SUBMIT--
+﻿//---SUBMIT--
 function submit($req,$send,$formId,$feedbackId,$header){
     var elem,params,xmlhttp,feedback;
 	params ='request='+$req+'&';
@@ -23,7 +23,9 @@ function submit($req,$send,$formId,$feedbackId,$header){
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.onreadystatechange = function(){
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-            if ( xmlhttp.responseText.trim() == "valid"){
+				console.log(xmlhttp.responseText);
+				console.log($header);
+            if ( xmlhttp.responseText.trim()=="valid"){
 				if($header!=''){
 					window.location.href=$header;
 				}
@@ -34,6 +36,8 @@ function submit($req,$send,$formId,$feedbackId,$header){
 				}
             }
         }
+
     }
+	
 	xmlhttp.send(params);
 }

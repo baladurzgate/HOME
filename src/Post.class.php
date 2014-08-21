@@ -1,11 +1,11 @@
-<?php
-/*
-						* * * * * * * * 
-						*             *
-						*   P O S T   *
-						*             *
-						* * * * * * * *
-*/
+ï»¿<?php
+	/*
+										* * * * * * * * 
+										*             *
+										*   P O S T   *
+										*             *
+										* * * * * * * *
+	*/
 class Post extends Component {
 
 	//variables 
@@ -32,7 +32,7 @@ class Post extends Component {
 	
 	//Manipulation des valeurs 
 	
-	//GET rend une valeur preparê¥
+	//GET rend une valeur preparée
 	public function getSerial(){
 		return $this->serial;
 	}
@@ -52,7 +52,7 @@ class Post extends Component {
 	public function setSerial($n){
 		$this->serial=$n;
 	}
-	//SET passe une valeur traitê¥ au prê¢¬able 
+	//SET passe une valeur traitée au préalable 
 	public function setValue($i,$v){
 		if($this->S->isAllowed($this,$v,true)){
 			$channels=$this->table->getChannelMap();

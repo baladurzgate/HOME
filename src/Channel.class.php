@@ -1,5 +1,5 @@
+ï»¿<?php //--CHANNEL--?>
 <?php
-//<!--CHANNEL-->
 class Channel extends Component {
 
 	//variables 
@@ -267,7 +267,7 @@ class Channel extends Component {
 		}
 		return false;
 	}
-	//traitement des valeurs destinê¦³ à¡¡tterir sur le serveur
+	//traitement des valeurs destinées à atterir sur le serveur
 	public function toServer($value){
 		$output="no values";
 		if($this->getChannelType()){
@@ -410,7 +410,7 @@ class Channel extends Component {
 		}		
 		return $output;
 	}
-	//traitement des valeurs destinê¦³ à¡ªtre affichê¦³ sur la page du client
+	//traitement des valeurs destinées à être affichées sur la page du client
 	public function toClient($value){
 		$output="";
 		if(isset($this->attr['type'])){

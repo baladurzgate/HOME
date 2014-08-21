@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 	/*
-						* * * * * * * * *
-						*               *
-						*   T A B L E   *
-						*               *
-						* * * * * * * * *
+											* * * * * * * * *
+											*               *
+											*   T A B L E   *
+											*               *
+											* * * * * * * * *
 	*/
 class Table extends Component {
 

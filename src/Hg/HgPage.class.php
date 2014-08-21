@@ -54,7 +54,14 @@ class HgPage extends Component {
 		}
 	}
 	public function HtmlToHg(){
-		// W I P
+		$dir = new Dir($this->getPath('S','objects'));
+		$objects=$dir->scan();
+		foreach($objects as $o){
+			if($o->extractName!=='page'){
+				$object = new HgObject($o,$this);
+				$object->append();
+			}
+		}
 	}
 }
 ?>

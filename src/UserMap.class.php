@@ -1,5 +1,4 @@
 <?php
-//------USERMAP-----
 class UserMap extends Component{
 	
 	//variables
